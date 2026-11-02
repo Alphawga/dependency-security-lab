@@ -33,10 +33,32 @@ jobs:
       - name: Run security tests
         run: node --test tests/security.test.js
 
+            - name: Prepare demo artifact
+        run: |
+          mkdir -p dist
+          cp install-demo.js dist/app.js
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v7
+        with:
+          name: demo-app
+          path: dist/
+          if-no-files-found: error
+
   deploy-demo:
     needs: build-and-test
     runs-on: ubuntu-latest
 
     steps:
-      - name: Simulate deployment
-        run: echo "Deployment stage reached successfully"
+      - name: Download artifact
+        uses: actions/download-artifact@v8
+        with:
+          name: demo-app
+          path: received/
+
+      - name: Inspect received artifact
+        run: |
+          echo "Files received:"
+          ls -la received/
+          echo "Application contents:"
+          cat received/app.js
