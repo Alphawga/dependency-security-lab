@@ -33,7 +33,7 @@ jobs:
       - name: Run security tests
         run: node --test tests/security.test.js
 
-            - name: Prepare demo artifact
+      - name: Prepare demo artifact
         run: |
           mkdir -p dist
           cp install-demo.js dist/app.js
