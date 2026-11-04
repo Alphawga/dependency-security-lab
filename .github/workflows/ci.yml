@@ -44,6 +44,9 @@ jobs:
           name: demo-app
           path: dist/
           if-no-files-found: error
+      - name: Simulate modification after testing
+        run: |
+          echo "console.log(Modified after testing passed)"; >> dist/app.js
 
   deploy-demo:
     needs: build-and-test
